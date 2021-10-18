@@ -6,17 +6,82 @@
     <title>Page Title</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
+    <link
+      rel="stylesheet"
+      href="https://use.fontawesome.com/releases/v5.13.0/css/all.css"
+      integrity="sha384-Bfad6CLCknfcloXFOyFnlgtENryhrpZCe29RTifKEixXQZ38WheV+i/6YWSzkz3V"
+      crossorigin="anonymous"
+    />
+    <script src="script.js" async></script>
   </head>
   <body>
     <div class="container">
-      <div class="cart" id="cart">
-        <!-- <h3>Cart</h3>
-        <span>3</span> -->
+      <button data-modal-target="#modal">
+        <div class="cart" id="cart">
+          <div class="icon">
+            <i class="fa fa-cart-plus" aria-hidden="true"></i>
+            <span id="items-count"></span>
+          </div>
+        </div>
+      </button>
+      <!-- <div class="carousel">Hello world Store</div> -->
+      <div class="w3-content w3-section">
+        <img
+          class="mySlides"
+          src="./Assets/mark-champs-Id2IIl1jOB0-unsplash.jpg"
+          style="width: 100%"
+        />
+        <img
+          class="mySlides"
+          src="https://images.unsplash.com/photo-1616627561839-074385245ff6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGJlZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+          style="width: 100%"
+        />
+        <img
+          class="mySlides"
+          src="https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fGJlZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+          style="width: 100%"
+        />
       </div>
-      <div class="carousel">Hello world Store</div>
+
       <div class="title"><h3>ITEMS</h3></div>
       <div class="items" id="items"></div>
     </div>
-    <script src="script.js"></script>
+    <div class="modal" id="modal">
+      <div class="modal-header">
+        <div class="title">Cart Items</div>
+        <button data-close-button class="close-button">&times;</button>
+      </div>
+      <div class="modal-body cart__container">
+        <!-- <div class="cart__container"> -->
+        <!-- <h3>Cart Items (<span>3</span>)</h3> -->
+        <div class="cart__row">
+          <span class="cart__item cart__header cart__column">ITEM</span>
+          <span class="cart__price cart__header cart__column">PRICE</span>
+          <span class="cart__quantity cart__header cart__column">QUANTITY</span>
+          <span class="cart__total cart__header cart__column">TOTAL</span>
+          <span class="cart__discount cart__header cart__column">DISCOUNT</span>
+          <span class="cart__totalWdiscount cart__header cart__column"
+            >TOTAL WITH DISCOUNT</span
+          >
+        </div>
+        <div id="cart__row__con"></div>
+
+        <div class="cart__total">
+          <strong class="cart__total__title">Total</strong>
+          <span class="cart__total__price" id="grandTotal">0</span>
+        </div>
+        <div class="checkout__buttons">
+          <button class="close-button">CONTINUE SHOPPING</button>
+          <button class="close-button">CHECK OUT</button>
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
+    <div id="overlay"></div>
+    <!-- <script src="script.js"></script> -->
+
+    <!-- -------------checkout ------------- -->
+
+    <div class="checkout" id="checkout"></div>
   </body>
 </html>
