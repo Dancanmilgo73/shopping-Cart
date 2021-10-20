@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-    <title>Page Title</title>
+    <title>XYZ COMPANY</title>
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <link rel="stylesheet" type="text/css" media="screen" href="index.css" />
     <link
@@ -16,6 +16,7 @@
   </head>
   <body>
     <div class="container">
+      <h2>XYZ Company</h2>
       <button data-modal-target="#modal">
         <div class="cart" id="cart">
           <div class="icon">
@@ -24,23 +25,41 @@
           </div>
         </div>
       </button>
-      <!-- <div class="carousel">Hello world Store</div> -->
-      <div class="w3-content w3-section">
-        <img
-          class="mySlides"
-          src="./Assets/mark-champs-Id2IIl1jOB0-unsplash.jpg"
-          style="width: 100%"
-        />
-        <img
-          class="mySlides"
-          src="https://images.unsplash.com/photo-1616627561839-074385245ff6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGJlZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          style="width: 100%"
-        />
-        <img
-          class="mySlides"
-          src="https://images.unsplash.com/photo-1617325247661-675ab4b64ae2?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTl8fGJlZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
-          style="width: 100%"
-        />
+
+      <div class="slideshow-container">
+        <div class="mySlides fade">
+          <img
+            src="https://media.istockphoto.com/photos/scandinavian-bedroom-interior-stock-photo-picture-id1264323513?b=1&k=20&m=1264323513&s=170667a&w=0&h=uBmOUpwYLXhxXnrfg8YRcsgRgltOfzkJzNBZDPR2DeQ="
+            style="width: 100%"
+          />
+          <div class="text">Bed Moto</div>
+        </div>
+
+        <div class="mySlides fade">
+          <img
+            src="https://images.unsplash.com/photo-1616627561839-074385245ff6?ixid=MnwxMjA3fDB8MHxzZWFyY2h8MTh8fGJlZHxlbnwwfHwwfHw%3D&ixlib=rb-1.2.1&auto=format&fit=crop&w=500&q=60"
+            style="width: 100%"
+          />
+          <div class="text">Moto Moto</div>
+        </div>
+
+        <div class="mySlides fade">
+          <img
+            src="./Assets/mark-champs-Id2IIl1jOB0-unsplash.jpg"
+            style="width: 100%"
+          />
+          <div class="text">Mwoto Sana</div>
+        </div>
+
+        <a class="prev" onclick="plusSlides(-1)">&#10094;</a>
+        <a class="next" onclick="plusSlides(1)">&#10095;</a>
+      </div>
+      <br />
+
+      <div style="text-align: center">
+        <span class="dot" onclick="currentSlide(1)"></span>
+        <span class="dot" onclick="currentSlide(2)"></span>
+        <span class="dot" onclick="currentSlide(3)"></span>
       </div>
 
       <div class="title"><h3>ITEMS</h3></div>
@@ -52,8 +71,6 @@
         <button data-close-button class="close-button">&times;</button>
       </div>
       <div class="modal-body cart__container">
-        <!-- <div class="cart__container"> -->
-        <!-- <h3>Cart Items (<span>3</span>)</h3> -->
         <div class="cart__row">
           <span class="cart__item cart__header cart__column">ITEM</span>
           <span class="cart__price cart__header cart__column">PRICE</span>
@@ -71,14 +88,15 @@
           <span class="cart__total__price" id="grandTotal">0</span>
         </div>
         <div class="checkout__buttons">
-          <button class="close-button">CONTINUE SHOPPING</button>
-          <button class="close-button">CHECK OUT</button>
+          <button class="close-button" data-close-button>
+            CONTINUE SHOPPING
+          </button>
+          <button class="close-button" data-close-button>CHECK OUT</button>
         </div>
         <!-- </div> -->
       </div>
     </div>
     <div id="overlay"></div>
-    <!-- <script src="script.js"></script> -->
 
     <!-- -------------checkout ------------- -->
 

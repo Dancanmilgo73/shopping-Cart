@@ -61,77 +61,26 @@ function fillCards(array) {
     let p = document.createElement("p");
     p.innerText = `kSh ${item.price}`;
     let button = document.createElement("BUTTON");
-    let inputQ = document.createElement("input");
-    inputQ.setAttribute("type", "number");
-    inputQ.setAttribute("id", `id${item.id}`);
-    inputQ.setAttribute("name", "quantity");
-    inputQ.classList.add("quantity");
-    inputQ.setAttribute("min", "1");
-    inputQ.setAttribute("max", "100");
-    inputQ.setAttribute("placeholder", "Quantity");
     button.innerText = "Add to Cart";
     button.setAttribute("id", item.id);
     card.appendChild(img);
     card.appendChild(p);
     card.appendChild(button);
-    card.appendChild(inputQ);
     container.appendChild(card);
   });
 }
 
-// function  to calculate the total cost
-function totalCost(id, quantity, price) {
-  let grandTotal = 0;
-  let grandTotalWithDisc = 0;
-  let discount = 0;
-  let result = {
-    grandTotal: grandTotal,
-    grandTotalWithDisc: grandTotalWithDisc,
-    discount: discount,
-  };
-  if (quantity >= 50) {
-    grandTotal = quantity * price;
-    discount = Number((quantity * 0.5).toFixed(2));
-    grandTotalWithDisc = grandTotal - discount;
-    result.grandTotal = grandTotal;
-    result.grandTotalWithDisc = grandTotalWithDisc;
-    result.discount = discount;
-    return result;
-  }
-  if (quantity >= 25) {
-    grandTotal = quantity * price;
-    discount = Number((quantity * 0.25).toFixed(2));
-    grandTotalWithDisc = grandTotal - discount;
-    result.grandTotal = grandTotal;
-    result.grandTotalWithDisc = grandTotalWithDisc;
-    result.discount = discount;
-    return result;
-  }
-  if (quantity >= 10) {
-    grandTotal = quantity * price;
-    discount = Number((quantity * 0.1).toFixed(2));
-    grandTotalWithDisc = grandTotal - discount;
-    result.grandTotal = grandTotal;
-    result.grandTotalWithDisc = grandTotalWithDisc;
-    result.discount = discount;
-    return result;
-  }
-  grandTotal = quantity * price;
-  return result;
-}
+let itemsInCart = {}; // An object to store the items that are currently selected to cart
+const added = []; //We store the ids of the items selected. We use this to ensure that the item is not selected twice
 
-// run these functions everytime we load the page
-const itemsInCart = {};
-
+// event listen to listen add to cart button-click
 document.getElementById("items").addEventListener("click", handleCart);
 
-// ----------function to handle the click event on add to cart button----------------
-const added = [];
-
+// ----------This function runs after add to cart button is clicked----------------
 function handleCart(e) {
-  // e.target.disabled = true;
+  let items = Object.keys(itemsInCart).length;
+  if (e.target.id === "items") return;
   if (itemsInCart[e.target.id]) {
-    // itemsInCart[e.target.id]++;
     alert("You already added this item to cart");
     return;
   } else {
@@ -140,13 +89,13 @@ function handleCart(e) {
   document.getElementById("items-count").innerText = Object.keys(
     itemsInCart
   ).length;
-  // console.log(itemsInCart);
+
   const cartData = Object.keys(itemsInCart).map((elem) => {
     return data.filter((item) => item.id == elem);
   });
   const container = document.getElementById("cart__row__con");
   cartData.map((data) => {
-    if (added.some((item) => item == data[0].id)) return;
+    if (added.some((item) => item == data[0].id)) return; //if item has already been placed in the modal, then dont repeat it
     let total = data[0].price;
     // console.log(added);
     container.innerHTML += `<div class="cart__row">
@@ -166,55 +115,51 @@ function handleCart(e) {
   <span class="cart__total cart__column" id=total${data[0].id}>${total}</span>
   <span class="cart__discount cart__column" id=disc${data[0].id}></span>
   <span class="cart__totalWdiscount withDisc cart__column" id=totalWithDisc${data[0].id}>${data[0].price}</span>
+  <button class="remove" data-remove>&times;</button>
 </div>`;
-    // let id = data[0].id;
-    // let price = 0;
-    // let quantity = 1;
 
-    // console.log(quantity);
     added.push(data[0].id);
-    // totalCost(id, quantity, price);
-
-    // console.log(cartData);
-    // Add cart items here
   });
-  // console.log(document.getElementById("cart__row__con"));
-  // console.log(
-  //   [document.getElementsByClassName("withDisc")].map((elem) => elem.innerText)
-  // );
-  getGrandTotal();
+
+  getGrandTotal(); //Get total again after adding a new item to the DOM
+  const selectedRemove = document.querySelectorAll("[data-remove]"); //Target the remove button in the DOM
+  for (let i = 0; i < selectedRemove.length; i++) {
+    const button = selectedRemove[i];
+    button.addEventListener("click", removeItem); //listen for click event then run the removeItem function
+  }
 }
-
-// function to remove event listeer from the clicked button
-// function removerListener() {
-//   document.getElementById("items").removeEventListener("click", handleCart);
-// }
-
-// function to handle input
-
+// ------------we run this function everytime the page loads------------//
 fillCards(data);
 
+// --------------function to run if there is a change inthe qunatity of individual items
 function changeHandler(q, price, total, id) {
   total = q * price;
-  document.getElementById(`total${id}`).innerText = total;
+
   if (q >= 50) {
-    totalWithDisc = total - (q * 0.5).toFixed(2);
-    document.getElementById(`disc${id}`).innerText = (q * 0.5).toFixed(2);
+    totalWithDisc = total - (q * 50).toFixed(2);
+    document.getElementById(`disc${id}`).innerText = (q * 50).toFixed(2);
     document.getElementById(`totalWithDisc${id}`).innerText = totalWithDisc;
+    getGrandTotal();
+    return;
   }
   if (q >= 25) {
-    totalWithDisc = total - (q * 0.25).toFixed(2);
-    document.getElementById(`disc${id}`).innerText = (q * 0.25).toFixed(2);
+    totalWithDisc = total - (q * 25).toFixed(2);
+    document.getElementById(`disc${id}`).innerText = (q * 25).toFixed(2);
     document.getElementById(`totalWithDisc${id}`).innerText = totalWithDisc;
+    getGrandTotal();
+    return;
   }
   if (q >= 10) {
-    totalWithDisc = total - (q * 0.1).toFixed(2);
-    document.getElementById(`disc${id}`).innerText = (q * 0.1).toFixed(2);
+    totalWithDisc = total - (q * 10).toFixed(2);
+    document.getElementById(`disc${id}`).innerText = (q * 10).toFixed(2);
     document.getElementById(`totalWithDisc${id}`).innerText = totalWithDisc;
+    getGrandTotal();
+    return;
   }
-
-  // alert(total);
+  document.getElementById(`totalWithDisc${id}`).innerText = total;
   getGrandTotal();
+  document.getElementById(`total${id}`).innerText = total;
+  // alert(total);
 }
 
 // function to get grandTotal
@@ -228,21 +173,50 @@ function getGrandTotal() {
   }
 }
 
-let myIndex = 0;
-carousel();
+// function to remove an item element from the modal
+function removeItem(e) {
+  let buttonClicked = e.target;
 
-function carousel() {
+  buttonClicked.parentElement.remove();
+  document.getElementById("items-count").innerText--;
+  if (document.getElementById("items-count").innerText == 0) {
+    itemsInCart = {};
+    document.getElementById("grandTotal").innerText = 0;
+    return;
+  }
+  getGrandTotal();
+}
+
+// --------------------carousel---------------------------
+let slideIndex = 1;
+showSlides(slideIndex);
+
+function plusSlides(n) {
+  showSlides((slideIndex += n));
+}
+
+function currentSlide(n) {
+  showSlides((slideIndex = n));
+}
+
+function showSlides(n) {
   let i;
-  let x = document.getElementsByClassName("mySlides");
-  for (i = 0; i < x.length; i++) {
-    x[i].style.display = "none";
+  let slides = document.getElementsByClassName("mySlides");
+  let dots = document.getElementsByClassName("dot");
+  if (n > slides.length) {
+    slideIndex = 1;
   }
-  myIndex++;
-  if (myIndex > x.length) {
-    myIndex = 1;
+  if (n < 1) {
+    slideIndex = slides.length;
   }
-  x[myIndex - 1].style.display = "block";
-  setTimeout(carousel, 5000); // Change image every 2 seconds
+  for (i = 0; i < slides.length; i++) {
+    slides[i].style.display = "none";
+  }
+  for (i = 0; i < dots.length; i++) {
+    dots[i].className = dots[i].className.replace(" activeDots", "");
+  }
+  slides[slideIndex - 1].style.display = "block";
+  dots[slideIndex - 1].className += " activeDots";
 }
 
 // modal
@@ -283,3 +257,5 @@ function closeModal(modal) {
   modal.classList.remove("active");
   overlay.classList.remove("active");
 }
+
+//
