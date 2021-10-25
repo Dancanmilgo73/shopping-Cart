@@ -93,6 +93,7 @@ function handleCart(e) {
   const cartData = Object.keys(itemsInCart).map((elem) => {
     return data.filter((item) => item.id == elem);
   });
+  // console.log(cartData);
   const container = document.getElementById("cart__row__con");
   cartData.map((data) => {
     if (added.some((item) => item == data[0].id)) return; //if item has already been placed in the modal, then dont repeat it
@@ -138,6 +139,7 @@ function changeHandler(q, price, total, id) {
   if (q >= 50) {
     totalWithDisc = total - (q * 50).toFixed(2);
     document.getElementById(`disc${id}`).innerText = (q * 50).toFixed(2);
+    document.getElementById(`total${id}`).innerText = total;
     document.getElementById(`totalWithDisc${id}`).innerText = totalWithDisc;
     getGrandTotal();
     return;
@@ -145,6 +147,7 @@ function changeHandler(q, price, total, id) {
   if (q >= 25) {
     totalWithDisc = total - (q * 25).toFixed(2);
     document.getElementById(`disc${id}`).innerText = (q * 25).toFixed(2);
+    document.getElementById(`total${id}`).innerText = total;
     document.getElementById(`totalWithDisc${id}`).innerText = totalWithDisc;
     getGrandTotal();
     return;
@@ -152,13 +155,14 @@ function changeHandler(q, price, total, id) {
   if (q >= 10) {
     totalWithDisc = total - (q * 10).toFixed(2);
     document.getElementById(`disc${id}`).innerText = (q * 10).toFixed(2);
+    document.getElementById(`total${id}`).innerText = total;
     document.getElementById(`totalWithDisc${id}`).innerText = totalWithDisc;
     getGrandTotal();
     return;
   }
   document.getElementById(`totalWithDisc${id}`).innerText = total;
-  getGrandTotal();
   document.getElementById(`total${id}`).innerText = total;
+  getGrandTotal();
   // alert(total);
 }
 
